@@ -1,0 +1,83 @@
+﻿@model IEnumerable<Mod3_Client.Models.Books>
+@inject IHttpContextAccessor HttpContextAccessor;
+@{
+    string nif = HttpContextAccessor.HttpContext.Session.GetString("nif");
+    string admin = HttpContextAccessor.HttpContext.Session.GetString("admin");
+    string status = HttpContextAccessor.HttpContext.Session.GetString("status");
+}
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>List of available books</h1>
+
+<form method="post">
+     <input type="text" id="search" name="search" placeholder="Search Book"/><p></p>
+     <input type="submit" value="search" />
+</form>
+
+@if (admin == "True")
+{
+    <p>
+        <a asp-action="Create">Create New</a>
+    </p>
+}
+<table class="table">
+    <thead>
+        <tr>
+            <th>Cover</th>
+            <th>
+                @Html.DisplayNameFor(model => model.ISBN)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Publisher)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Author)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Genre)
+            </th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td><a href="~/Imagens/Get?isbn=@item.ISBN">Check Book Cover</a></td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ISBN)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Publisher)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Author)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Genre)
+                </td>
+                <td>
+                    @Html.ActionLink("Details", "Get", new { isbn = item.ISBN }) |
+                    <a href="~/Stock/Index?isbn=@item.ISBN">Rent this book</a>
+                </td>
+                @if (admin == "True")
+                {
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { isbn = item.ISBN }) |
+
+                        @Html.ActionLink("Delete", "Delete", new { isbn = item.ISBN }) 
+                    </td>
+                }
+            </tr>
+        }
+    </tbody>
+</table>

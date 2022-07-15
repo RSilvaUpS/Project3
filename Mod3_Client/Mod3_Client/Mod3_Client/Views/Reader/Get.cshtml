@@ -1,0 +1,91 @@
+﻿@model Mod3_Client.Models.Reader
+@inject IHttpContextAccessor HttpContextAccessor;
+@{
+    string nif = HttpContextAccessor.HttpContext.Session.GetString("nif");
+    string admin = HttpContextAccessor.HttpContext.Session.GetString("admin");
+    string status = HttpContextAccessor.HttpContext.Session.GetString("status");
+}
+@{
+    ViewData["Title"] = "Get";
+}
+
+<h1>Get</h1>
+
+<h4>Reader</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Get">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="NIF" class="control-label"></label>
+                <input asp-for="NIF" class="form-control" />
+                <span asp-validation-for="NIF" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Nome" class="control-label"></label>
+                <input asp-for="Nome" class="form-control" />
+                <span asp-validation-for="Nome" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Apelido" class="control-label"></label>
+                <input asp-for="Apelido" class="form-control" />
+                <span asp-validation-for="Apelido" class="text-danger"></span>
+            </div>
+            @if (nif != Model.NIF.ToString())
+            {
+                <div class="form-group" style="display:none">
+                <label asp-for="Password" class="control-label"></label>
+                <input asp-for="Password" class="form-control" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+            }
+            else
+            {
+                <div class="form-group">
+                <label asp-for="Password" class="control-label"></label>
+                <input asp-for="Password" class="form-control" type="password" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            }
+            @if(admin == "True"){
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Estado" /> @Html.DisplayNameFor(model => model.Estado)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="IsAdmin" /> @Html.DisplayNameFor(model => model.IsAdmin)
+                </label>
+                </div>
+            }
+            else
+            {
+                <div class="form-group form-check" style="display:none">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Estado" /> @Html.DisplayNameFor(model => model.Estado)
+                </label>
+            </div>
+            <div class="form-group form-check" style="display:none">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="IsAdmin" /> @Html.DisplayNameFor(model => model.IsAdmin)
+                </label>
+            </div>
+            }
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+<br />
+<br />
+<hr />
+@if(admin != "True"){
+<div>
+    <a href="/Reader/Delete?nif=@nif"><button type="button" class="btn btn-danger">DELETE USER</button></a>
+</div>
+}
+
+

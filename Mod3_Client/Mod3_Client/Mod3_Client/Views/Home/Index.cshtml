@@ -1,0 +1,71 @@
+﻿@inject IHttpContextAccessor HttpContextAccessor;
+@{
+    string nif = HttpContextAccessor.HttpContext.Session.GetString("nif");
+    string admin = HttpContextAccessor.HttpContext.Session.GetString("admin");
+    string status = HttpContextAccessor.HttpContext.Session.GetString("status");
+}
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    @if (admin == "True")
+    {
+        <h5 class="display-4">Admin operations</h5>
+        <hr />
+        <a class="nav-link text-dark" asp-area="" asp-controller="Reader" asp-action="Index">User List</a>
+        <a class="nav-link text-dark" asp-area="" asp-controller="Reader" asp-action="Inactive">Inactive User List</a>
+        <a class="nav-link text-dark" asp-area="" asp-controller="Books" asp-action="Index">Manage Books</a>
+        <a class="nav-link text-dark" asp-area="" asp-controller="Transactions" asp-action="IndexAdmin">User Transaction List</a>
+        <a class="nav-link text-dark" asp-area="" asp-controller="PendingEntrega" asp-action="IndexAdmin">User Pending Return List</a>
+        <a class="nav-link text-dark" asp-area="" asp-controller="Stock" asp-action="transfer">Transfer Book Stock</a>
+        <a class="nav-link text-dark" asp-area="" asp-controller="Stock" asp-action="update">Update Book Stock</a>
+        <a class="nav-link text-dark" asp-area="" asp-controller="Imagens" asp-action="editcover">Update Book Cover</a>
+        <br />
+        <br />
+    }
+    @if (nif != null)
+    {
+        @if (admin == "True")
+        {
+            <h4 class="display-4">Actions as reader</h4>
+        <hr />
+        }
+        <ul>
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-area="" asp-controller="Transactions" asp-action="Index">Transactions</a>
+            </li>
+        </ul>
+        <ul>
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-area="" asp-controller="Books" asp-action="Index">Books Available</a>
+            </li>
+        </ul>
+
+        <ul>
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-area="" asp-controller="PendingEntrega" asp-action="Index">Pending Return</a>
+            </li>
+        </ul>
+    }
+
+    @if (admin == "True")
+    {
+        <br />
+        <br />
+        <h5 class="display-4">Some stats</h5>
+        <hr />
+        <h3>Top items</h3>
+        <a class="nav-link text-dark" asp-area="" asp-controller="Stats" asp-action="TopNucleo">Cell with most pick ups</a>
+        <a class="nav-link text-dark" asp-area="" asp-controller="Stats" asp-action="TopAuthor">Author with the most pick ups</a>
+        <a class="nav-link text-dark" asp-area="" asp-controller="Stats" asp-action="TopBook">Book with the most pick ups</a>
+        <a class="nav-link text-dark" asp-area="" asp-controller="Stats" asp-action="TopGenre">Genre with the most pick ups</a>
+        <br />
+        <h3>Worst Performing items</h3>
+        <a class="nav-link text-dark" asp-area="" asp-controller="Stats" asp-action="WorstGenre">Genre with the least pick ups</a>
+        <a class="nav-link text-dark" asp-area="" asp-controller="Stats" asp-action="WorstNucleo">Cell with the least pick ups</a>
+        <br />
+        <br />
+    }
+</div>

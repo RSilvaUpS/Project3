@@ -1,0 +1,17 @@
+﻿@{
+    ViewData["Title"] = "Index";
+}
+
+<h3>@ViewBag.Error</h3>
+<h5>@ViewBag.Message</h5>
+
+<form method="post">
+    <label>NIF: </label> <input type="number" id="nif" name="nif" /><p></p>
+        <label>Password: </label> <input type="password" id="password" name="password" />
+        <br /><br />
+        <input type="submit" value="Login" />
+        <a href="~/Login/Register">
+            <input type="button" value="Register" />
+        </a>
+</form>
+

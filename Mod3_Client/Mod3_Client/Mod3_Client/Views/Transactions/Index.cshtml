@@ -1,0 +1,66 @@
+﻿@model IEnumerable<Mod3_Client.Models.Transactions>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Book Rental History</h1>
+
+<h3 style="color:red">@ViewBag.Message</h3>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.TransactionID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ISBN)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NIF)
+            </th>
+            <th>
+                Pickup Date
+            </th>
+            <th>
+                Maximum Return Date
+            </th>
+            <th>
+                Returned Date
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Reverse()) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.TransactionID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ISBN)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NIF)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Levantamento)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DataLimite)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Entrega)
+            </td>
+            <td>
+                @if(item.Entrega == "Not Returned")
+                @Html.ActionLink("Return", "Return", new { transactionId = item.TransactionID })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

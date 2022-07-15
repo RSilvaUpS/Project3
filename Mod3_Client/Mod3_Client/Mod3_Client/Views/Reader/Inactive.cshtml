@@ -1,0 +1,35 @@
+﻿@model IEnumerable<int>
+
+@{
+    ViewData["Title"] = "Inactive";
+}
+
+<h1>Index</h1>
+
+<h5>@ViewBag.Message</h5>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                NIF of inactive users
+            </th>
+
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @item
+            </td>
+
+            <td>
+                @Html.ActionLink("Edit", "Get", new { nif = item}) |
+                @Html.ActionLink("Delete", "Delete", new { nif = item })                  
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

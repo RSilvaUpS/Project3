@@ -1,0 +1,35 @@
+﻿@model Mod3_Client.Models.Imagens
+
+@{
+    ViewData["Title"] = "Get";
+}
+
+<h1>Get</h1>
+
+<div>
+    <h4>Imagens</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            ISBN
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ISBN)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CoverImage)
+        </dt>
+        <dd class = "col-sm-10">
+            @if (Model.CoverImage != null)
+            {
+                var base64 = Convert.ToBase64String(Model.CoverImage);
+                var imgsrc = string.Format("data:image/jpg;base64,{0}", base64);
+                <img src="@imgsrc" width="70%" />
+            }
+            else
+            {
+                <img src="" width="70%" alt="No cover available at the moment"/>
+            }
+        </dd>
+    </dl>
+</div>

@@ -1,0 +1,149 @@
+﻿@model IEnumerable<Mod3_Client.Models.Stock>
+@inject IHttpContextAccessor HttpContextAccessor;
+@{
+    string nif = HttpContextAccessor.HttpContext.Session.GetString("nif");
+    string admin = HttpContextAccessor.HttpContext.Session.GetString("admin");
+    string status = HttpContextAccessor.HttpContext.Session.GetString("status");
+    Books book = new Books();
+}
+@{
+    ViewData["Title"] = "Index";
+}
+
+@foreach (var item in Model)
+{
+    book.ISBN = Convert.ToInt32(item.ISBN);
+}
+<h1>@book.ISBN</h1>
+
+<h4>Cells with stock normally available for both pickup and onsite consultation</h4>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ISBN)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.Names)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            @if (item.Stocks > 1)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ISBN)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Names)
+                    </td>
+                    <td>
+                        <a href="~/Transactions/LendBook?isbn=@item.ISBN&nucleoId=@item.NucleoID"> Rent this book at this cell</a>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.NucleoID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ISBN)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Stocks)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Names)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+
+<hr />
+<br />
+
+<h4>Cells with book for physical consulatation <u><b>ONLY</b></u></h4>
+        @foreach (var item in Model)
+        {
+            @if (item.Stocks == 1)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ISBN)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Stocks)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Names)
+                    </td>
+                    <td>
+
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+
+@if (admin == "True")
+{
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.NucleoID)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ISBN)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Stocks)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Names)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                @if (item.Stocks < 1)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.NucleoID)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ISBN)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Stocks)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Names)
+                        </td>
+                        <td>
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+
+}
